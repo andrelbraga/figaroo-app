@@ -24,9 +24,9 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) Framework TypeScript starter repository.
-[TypeORM](https://typeorm.io/#/) TypeORM is an ORM
-[Swagger/OpenAPI](https://swagger.io/) OpenAPI Specification & Swagger Tools
+[Nest](https://github.com/nestjs/nest) Framework TypeScript starter repository.<p>
+[TypeORM](https://typeorm.io/#/) TypeORM is an ORM.<p>
+[Swagger/OpenAPI](https://swagger.io/) OpenAPI Specification & Swagger Tools.<p>
 
 ## Installation
 
