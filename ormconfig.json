@@ -1,0 +1,23 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "dbmaster",
+  "database": "db-figaroo",
+  "logging": true,
+  "entities": [
+    "dist/**/*.entity.{ts,js}"
+  ],
+  "migrations": [
+    "dist/migration/**/*.ts"
+  ],
+  "subscribers": [
+    "dist/subscriber/**/*.ts"
+  ],
+  "cli": {
+    "entitiesDir": "src/entities",
+    "migrationsDir": "src/migration",
+    "subscribersDir": "src/subscriber"
+  }
+}

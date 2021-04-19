@@ -10,6 +10,7 @@
       "build": "nest build",
       "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
       "start": "nest start",
+      "start:dev:db": "scripts/start-db.sh",
       "start:dev": "nest start --watch",
       "start:debug": "nest start --debug --watch",
       "start:prod": "node dist/main",
@@ -19,10 +20,9 @@
       "test:cov": "jest --coverage",
       "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
       "test:e2e": "jest --config ./test/jest-e2e.json",
-      "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-      "pretypeorm": "(rm ormconfig.json || :) && ts-node -r tsconfig-paths/register scripts/ormconfig.ts",
-      "typeorm:migration:generate": "npm run typeorm -- migration:generate -n",
-      "typeorm:migration:run": "npm run typeorm -- migration:run",
+      "pretypeorm": "rimraf ormconfig.json && ts-node-transpile-only ./scripts/ormconfig",
+      "typeorm:migration:generate": "typeorm migration:generate -n",
+      "typeorm:migration:run": "typeorm migration:run",
       "typeorm:create-entity": "typeorm entity:create -d src/entities -n"
    },
    "dependencies": {

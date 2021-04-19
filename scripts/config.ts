@@ -1,7 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { join } from 'path';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
 class ConfigService {
@@ -12,8 +11,7 @@ class ConfigService {
     if (!value && throwOnMissing) {
       throw new Error(`config error - missing env.${key}`);
     }
-
-    return value;
+    return String(value);
   }
 
   public ensureValues(keys: string[]) {
@@ -33,11 +31,11 @@ class ConfigService {
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
       type: 'postgres',
-      host: this.getValue('DB_HOST'),
-      port: parseInt(this.getValue('DB_PORT')),
-      username: this.getValue('DB_USER'),
-      password: this.getValue('DB_PASSWORD'),
-      database: this.getValue('DB_DATABASE'),
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       logging: true,
       entities: ['dist/**/*.entity.{ts,js}'],
       migrations: ['dist/migration/**/*.ts'],
@@ -52,7 +50,6 @@ class ConfigService {
 }
 
 const configService = new ConfigService(process.env).ensureValues([
-  'DB_TYPE',
   'DB_HOST',
   'DB_PORT',
   'DB_USER',

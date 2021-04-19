@@ -16,63 +16,67 @@ export class Customers {
 
   @ApiProperty({ required: true })
   @IsString()
-  @Column({ type: 'text', nullable: true })
+  @Column({ name: 'name', type: 'text', nullable: false })
   name: string;
 
   @ApiProperty({ required: true })
   @IsString()
-  @Column({ type: 'text', nullable: true })
-  last_name: string;
+  @Column({ name: 'last_name', type: 'text', nullable: false })
+  lastName: string;
 
   @ApiProperty({ required: true })
   @IsString()
-  @Column({ type: 'text', nullable: true })
+  @Column({ name: 'email', type: 'text', nullable: false })
   email: string;
 
   @ApiProperty({ required: true })
   @IsNumber()
-  @Column({ type: 'numeric', nullable: true })
-  document: number;
+  @Column({ name: 'document', type: 'numeric', nullable: false })
+  document: string;
 
   @ApiProperty({ required: false })
   @IsString()
-  @Column({ type: 'text', nullable: true })
-  sur_name: string;
+  @Column({ name: 'sur_name', type: 'text', nullable: true })
+  surName: string;
 
   @ApiProperty({ required: false })
   @IsNumber()
-  @Column({ type: 'numeric', nullable: true })
-  age: number;
+  @Column({ name: 'age', type: 'numeric', nullable: true })
+  age: string;
 
   @ApiProperty({ required: false })
   @IsString()
-  @Column({ type: 'text', nullable: true })
-  nationality: number;
+  @Column({ name: 'nationality', type: 'text', nullable: true })
+  nationality: string;
 
   @ApiProperty({ required: false })
   @IsString()
-  @Column({ type: 'text', nullable: true })
-  avatar_path: string;
+  @Column({ name: 'avatar_path', type: 'text', nullable: true })
+  avatarPath: string;
 
   @ApiProperty({ required: true })
   @IsNumber()
-  @Column({ type: 'numeric' })
+  @Column({ name: 'phone', type: 'numeric', nullable: false })
   phone: number;
 
   @ApiProperty({ required: false })
   @IsDateString()
   @IsOptional()
   @Column({
+    name: 'created_at',
     type: 'timestamp without time zone',
     default: () => 'CURRENT_TIMESTAMP',
+    nullable: false,
   })
-  created_at: string;
+  createdAt: string;
 
   @ApiProperty({ required: true })
   @IsDateString()
   @IsOptional()
   @Column({
+    name: 'updated_at',
     type: 'timestamp without time zone',
+    nullable: false,
   })
-  updated_at: string;
+  updatedAt: string;
 }
