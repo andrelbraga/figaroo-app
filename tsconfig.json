@@ -1,7 +1,8 @@
 {
   "include": [
     "src/**/*",
-    "package.json",
+    "scripts/**/*",
+    "package.json"
   ],
   "exclude": [
     "node_modules",
@@ -24,7 +25,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "skipLibCheck": true,
+    
     "incremental": true,
     "composite": true,
     "suppressImplicitAnyIndexErrors": true

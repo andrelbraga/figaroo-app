@@ -4,20 +4,20 @@
   "port": 5432,
   "username": "postgres",
   "password": "dbmaster",
-  "database": "db-figaroo",
+  "database": "db-figaroo-dev",
   "logging": true,
   "entities": [
-    "dist/**/*.entity.{ts,js}"
+    "src/**/**/**/*.entity.{ts,js}"
   ],
   "migrations": [
-    "dist/migration/**/*.ts"
+    "src/migrations/**/*.ts"
   ],
   "subscribers": [
-    "dist/subscriber/**/*.ts"
+    "src/subscriber/**/*.ts"
   ],
   "cli": {
-    "entitiesDir": "src/entities",
-    "migrationsDir": "src/migration",
+    "entitiesDir": "src/**/**/entities",
+    "migrationsDir": "src/migrations",
     "subscribersDir": "src/subscriber"
   }
 }

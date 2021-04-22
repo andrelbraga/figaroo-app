@@ -68,18 +68,24 @@ $ npm run test:cov
 $ typeorm-model-generator -h localhost -d "secret" -p "secret" -u postgres -x "secret" -e postgres
 ```
 
-Migration
-Create migration
+Migrations
+Create migrations
 
 ```bash
+# create ormconfig file
+$ npm run pretypeormconfig
+
 # generate migrations
-$ npm run typeorm -- migration:generate -n
+$ npm run typeorm migration:generate -- -n my_migration
 
 # run migrations
 $ npm run typeorm -- migration:run
 
 # create model entities (optional)
 $ typeorm entity:create -d src/entities -n
+
+# CLI query table (optional)
+$ npm run query -- "select * from customers"
 ```
 
 

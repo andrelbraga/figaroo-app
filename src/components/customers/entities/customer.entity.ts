@@ -49,6 +49,11 @@ export class Customers {
   @Column({ name: 'nationality', type: 'text', nullable: true })
   nationality: string;
 
+  @ApiProperty({ required: true })
+  @IsString()
+  @Column({ type: 'text', name: 'password' })
+  password: string;
+
   @ApiProperty({ required: false })
   @IsString()
   @Column({ name: 'avatar_path', type: 'text', nullable: true })
