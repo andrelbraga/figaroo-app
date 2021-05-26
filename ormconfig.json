@@ -4,8 +4,9 @@
   "port": 5432,
   "username": "postgres",
   "password": "dbmaster",
-  "database": "db-figaroo-dev",
+  "database": "figaroo-dev",
   "logging": true,
+  "synchronize": true,
   "entities": [
     "src/**/**/**/*.entity.{ts,js}"
   ],

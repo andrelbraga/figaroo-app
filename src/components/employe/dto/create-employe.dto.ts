@@ -1,5 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateEmployeDto {
   @ApiProperty({ required: true })
@@ -53,6 +54,6 @@ export class CreateEmployeDto {
   @ApiProperty({ required: false, default: () => Date.now() })
   @IsString()
   @IsNotEmpty()
-  @MaxLength(20)
+  @MaxLength(30)
   updatedAt: Date;
 }

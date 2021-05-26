@@ -72,14 +72,17 @@ Migrations
 Create migrations
 
 ```bash
+
 # create ormconfig file
+# obs: Ao gerar o arquivo ormconfig.json verificar se os paths estão com dist/ 
+# ao criar um migration remover 
 $ npm run pretypeormconfig
 
 # generate migrations
-$ npm run typeorm migration:generate -- -n my_migration
+$ npm run typeorm:migration:generate
 
 # run migrations
-$ npm run typeorm -- migration:run
+$ npm run typeorm:migration:run
 
 # create model entities (optional)
 $ typeorm entity:create -d src/entities -n

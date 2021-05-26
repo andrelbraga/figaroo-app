@@ -1,34 +1,44 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { employeervice } from './employe.service';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
+import { EmployeService } from './employe.service';
 import { CreateEmployeDto } from './dto/create-employe.dto';
 import { UpdateEmployeDto } from './dto/update-employe.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('employe')
 @Controller('employe')
-export class employeController {
-  constructor(private readonly employeervice: employeervice) {}
+export class EmployeController {
+  constructor(private readonly employeService: EmployeService) {}
 
   @Post()
   create(@Body() createEmployeDto: CreateEmployeDto) {
-    return this.employeervice.create(createEmployeDto);
+    return this.employeService.createAndRelations(createEmployeDto);
   }
 
   @Get()
   findAll() {
-    return this.employeervice.findAll();
+    return this.employeService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.employeervice.findOne(+id);
+    return this.employeService.findOne(+id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEmployeDto: UpdateEmployeDto) {
-    return this.employeervice.update(+id, updateEmployeDto);
+    return this.employeService.update(+id, updateEmployeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.employeervice.remove(+id);
+    return this.employeService.remove(+id);
   }
 }

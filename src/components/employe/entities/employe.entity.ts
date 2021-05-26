@@ -1,4 +1,6 @@
 import { Column, Entity, Index, OneToMany } from 'typeorm';
+
+import { EmployeHasSkill } from './employe-has-skill.entity';
 /* import { EmployeHasCompetencie } from './employe-has-competencie.entity';
 import { EmployeHasPhone } from './employe-has-phone.entity';
 import { MerchantHasEmploye } from './merchant-has-employe.entity';
@@ -54,12 +56,12 @@ export class Employe {
   @Column({ type: 'text', name: 'age', nullable: true })
   age: string | null;
 
-  /* @OneToMany(
-    () => EmployeHasCompetencie,
-    (employeHasCompetencie) => employeHasCompetencie.employe,
+  @OneToMany(
+    () => EmployeHasSkill,
+    (employeHasSkill) => employeHasSkill.employe,
   )
-  employeHasCompetencies: EmployeHasCompetencie[];
-
+  employeHasSkills: EmployeHasSkill[];
+/*
   @OneToMany(
     () => EmployeHasPhone,
     (employeHasPhone) => employeHasPhone.employe,
