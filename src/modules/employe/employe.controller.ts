@@ -24,21 +24,21 @@ export class EmployeController {
 
   @Get()
   findAll() {
-    return this.employeService.findAll();
+    return this.employeService.findAllAndRelations();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.employeService.findOne(+id);
+    return this.employeService.findOneAndRelations(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEmployeDto: UpdateEmployeDto) {
-    return this.employeService.update(+id, updateEmployeDto);
+    return this.employeService.update(id, updateEmployeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.employeService.remove(+id);
+    return this.employeService.remove(id);
   }
 }

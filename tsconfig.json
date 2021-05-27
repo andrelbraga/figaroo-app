@@ -3,7 +3,7 @@
     "src/**/*",
     "scripts/**/*",
     "package.json"
-  ],
+, "output/employe-has-skill.entity.ts"  ],
   "exclude": [
     "node_modules",
     "test",

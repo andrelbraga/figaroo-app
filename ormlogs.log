@@ -1,0 +1,40 @@
+[2021-05-27T03:26:27.882Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = current_schema() AND "table_name" = 'migrations'
+[2021-05-27T03:26:27.898Z][QUERY]: CREATE TABLE "migrations" ("id" SERIAL NOT NULL, "timestamp" bigint NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_8c82d7f526340ab734260ea46be" PRIMARY KEY ("id"))
+[2021-05-27T03:26:27.923Z][QUERY]: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+[2021-05-27T03:26:27.926Z]0 migrations are already loaded in the database.
+[2021-05-27T03:26:27.927Z]1 migrations were found in the source code.
+[2021-05-27T03:26:27.927Z]1 migrations are new migrations that needs to be executed.
+[2021-05-27T03:26:27.928Z][QUERY]: START TRANSACTION
+[2021-05-27T03:26:27.930Z][QUERY]: CREATE TABLE "public"."schedule" ("schedule_id" uuid NOT NULL DEFAULT uuid_generate_v4(), "description" text NOT NULL, "starts_at" TIME, "ends_at" TIME, "scheduling_date" date, "price" text, "service" text, "status" text, "updated_at" TIMESTAMP NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(0), CONSTRAINT "PK_32f8d5a89767a6cb077e72546ce" PRIMARY KEY ("schedule_id"))
+[2021-05-27T03:26:27.942Z][QUERY]: CREATE UNIQUE INDEX "schedules_pkey1" ON "public"."schedule" ("schedule_id") 
+[2021-05-27T03:26:27.946Z][QUERY]: CREATE TABLE "public"."skill" ("skill_id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text, "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(0), "updated_at" TIMESTAMP NOT NULL, CONSTRAINT "PK_f1117ff319f070e8e3a300c71f2" PRIMARY KEY ("skill_id"))
+[2021-05-27T03:26:27.956Z][QUERY]: CREATE UNIQUE INDEX "skill_pkey" ON "public"."skill" ("skill_id") 
+[2021-05-27T03:26:27.963Z][QUERY]: CREATE TABLE "public"."employe" ("employe_id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text NOT NULL, "last_name" text NOT NULL, "email" text NOT NULL, "document" text NOT NULL, "nationality" text NOT NULL, "birthdate" date NOT NULL, "phone" text NOT NULL, "sur_name" text, "years_business" text, "password" text NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(0), "updated_at" TIMESTAMP NOT NULL, "age" text, CONSTRAINT "PK_300c8e2db5c17e6b99c4689f301" PRIMARY KEY ("employe_id"))
+[2021-05-27T03:26:27.974Z][QUERY]: CREATE UNIQUE INDEX "employe_pkey" ON "public"."employe" ("employe_id") 
+[2021-05-27T03:26:27.979Z][QUERY]: CREATE TABLE "public"."merchant" ("merchant_id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text NOT NULL, "description" text, "employees" numeric(3,0), "document" numeric(20,0) NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(0), "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL, CONSTRAINT "PK_1ef35354c0a8756703335898101" PRIMARY KEY ("merchant_id"))
+[2021-05-27T03:26:27.989Z][QUERY]: CREATE UNIQUE INDEX "merchant_pkey" ON "public"."merchant" ("merchant_id") 
+[2021-05-27T03:26:27.993Z][QUERY]: CREATE TABLE "public"."service" ("service_id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text NOT NULL, "description" text NOT NULL, "price" numeric(10,0) NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(0), "updated_at" TIMESTAMP NOT NULL, CONSTRAINT "PK_4501d9a8448cf21a8100cec1e6d" PRIMARY KEY ("service_id"))
+[2021-05-27T03:26:28.004Z][QUERY]: CREATE UNIQUE INDEX "service_pkey" ON "public"."service" ("service_id") 
+[2021-05-27T03:26:28.008Z][QUERY]: CREATE TABLE "public"."employe_has_skill" ("employeEmployeId" uuid NOT NULL, "skillSkillId" uuid NOT NULL, CONSTRAINT "PK_b32919f7b6ad35dc849747d00da" PRIMARY KEY ("employeEmployeId", "skillSkillId"))
+[2021-05-27T03:26:28.014Z][QUERY]: CREATE INDEX "IDX_4cfb26c1b9e979a797a815e79e" ON "public"."employe_has_skill" ("employeEmployeId") 
+[2021-05-27T03:26:28.020Z][QUERY]: CREATE INDEX "IDX_be8a7d49cd7a7ec3d70bcb5a7d" ON "public"."employe_has_skill" ("skillSkillId") 
+[2021-05-27T03:26:28.026Z][QUERY]: CREATE TABLE "public"."employe_has_schedules" ("employeEmployeId" uuid NOT NULL, "scheduleScheduleId" uuid NOT NULL, CONSTRAINT "PK_8551386c75700d219da2e922924" PRIMARY KEY ("employeEmployeId", "scheduleScheduleId"))
+[2021-05-27T03:26:28.033Z][QUERY]: CREATE INDEX "IDX_132d4c07336c5d3a723a8829c1" ON "public"."employe_has_schedules" ("employeEmployeId") 
+[2021-05-27T03:26:28.037Z][QUERY]: CREATE INDEX "IDX_ff4a376863dcea65ea6f74ab65" ON "public"."employe_has_schedules" ("scheduleScheduleId") 
+[2021-05-27T03:26:28.065Z][QUERY]: CREATE TABLE "public"."employe_has_merchants" ("employeEmployeId" uuid NOT NULL, "merchantMerchantId" uuid NOT NULL, CONSTRAINT "PK_4512b69c87bc18b641e5f9cbd21" PRIMARY KEY ("employeEmployeId", "merchantMerchantId"))
+[2021-05-27T03:26:28.071Z][QUERY]: CREATE INDEX "IDX_d8ddba9d1dac831a60a74631e1" ON "public"."employe_has_merchants" ("employeEmployeId") 
+[2021-05-27T03:26:28.077Z][QUERY]: CREATE INDEX "IDX_bc48f6f230ca85a8d2bf1723b7" ON "public"."employe_has_merchants" ("merchantMerchantId") 
+[2021-05-27T03:26:28.082Z][QUERY]: CREATE TABLE "public"."merchant_has_services" ("merchantMerchantId" uuid NOT NULL, "serviceServiceId" uuid NOT NULL, CONSTRAINT "PK_e0b0e55f7e6b193c9522cce65c9" PRIMARY KEY ("merchantMerchantId", "serviceServiceId"))
+[2021-05-27T03:26:28.088Z][QUERY]: CREATE INDEX "IDX_ad72b979c7f179afbd9b0e9b45" ON "public"."merchant_has_services" ("merchantMerchantId") 
+[2021-05-27T03:26:28.094Z][QUERY]: CREATE INDEX "IDX_111dfab494b7191e30a77de0dc" ON "public"."merchant_has_services" ("serviceServiceId") 
+[2021-05-27T03:26:28.099Z][QUERY]: ALTER TABLE "public"."employe_has_skill" ADD CONSTRAINT "FK_4cfb26c1b9e979a797a815e79e3" FOREIGN KEY ("employeEmployeId") REFERENCES "public"."employe"("employe_id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2021-05-27T03:26:28.104Z][QUERY]: ALTER TABLE "public"."employe_has_skill" ADD CONSTRAINT "FK_be8a7d49cd7a7ec3d70bcb5a7d4" FOREIGN KEY ("skillSkillId") REFERENCES "public"."skill"("skill_id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2021-05-27T03:26:28.108Z][QUERY]: ALTER TABLE "public"."employe_has_schedules" ADD CONSTRAINT "FK_132d4c07336c5d3a723a8829c10" FOREIGN KEY ("employeEmployeId") REFERENCES "public"."employe"("employe_id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2021-05-27T03:26:28.112Z][QUERY]: ALTER TABLE "public"."employe_has_schedules" ADD CONSTRAINT "FK_ff4a376863dcea65ea6f74ab655" FOREIGN KEY ("scheduleScheduleId") REFERENCES "public"."schedule"("schedule_id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2021-05-27T03:26:28.115Z][QUERY]: ALTER TABLE "public"."employe_has_merchants" ADD CONSTRAINT "FK_d8ddba9d1dac831a60a74631e11" FOREIGN KEY ("employeEmployeId") REFERENCES "public"."employe"("employe_id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2021-05-27T03:26:28.118Z][QUERY]: ALTER TABLE "public"."employe_has_merchants" ADD CONSTRAINT "FK_bc48f6f230ca85a8d2bf1723b75" FOREIGN KEY ("merchantMerchantId") REFERENCES "public"."merchant"("merchant_id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2021-05-27T03:26:28.122Z][QUERY]: ALTER TABLE "public"."merchant_has_services" ADD CONSTRAINT "FK_ad72b979c7f179afbd9b0e9b459" FOREIGN KEY ("merchantMerchantId") REFERENCES "public"."merchant"("merchant_id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2021-05-27T03:26:28.125Z][QUERY]: ALTER TABLE "public"."merchant_has_services" ADD CONSTRAINT "FK_111dfab494b7191e30a77de0dca" FOREIGN KEY ("serviceServiceId") REFERENCES "public"."service"("service_id") ON DELETE CASCADE ON UPDATE NO ACTION
+[2021-05-27T03:26:28.131Z][QUERY]: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1622085966512,"myInit1622085966512"]
+[2021-05-27T03:26:28.136Z]Migration myInit1622085966512 has been executed successfully.
+[2021-05-27T03:26:28.137Z][QUERY]: COMMIT

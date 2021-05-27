@@ -1,6 +1,11 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  MaxLength
+} from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
+import { Skill } from 'src/modules/common/entities/skill.entity';
 
 export class CreateEmployeDto {
   @ApiProperty({ required: true })
@@ -56,4 +61,7 @@ export class CreateEmployeDto {
   @IsNotEmpty()
   @MaxLength(30)
   updatedAt: Date;
+
+  @ApiProperty({ required: true })
+  skills: Skill[];
 }

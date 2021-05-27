@@ -6,7 +6,7 @@
   "password": "dbmaster",
   "database": "figaroo-dev",
   "logging": true,
-  "synchronize": true,
+  "logger": "file",
   "entities": [
     "src/**/**/**/*.entity.{ts,js}"
   ],

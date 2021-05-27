@@ -37,14 +37,14 @@ class ConfigService {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       logging: true,
-      synchronize: true,
-      entities: ['src/**/**/**/*.entity.{ts,js}'],
-      migrations: ['src/migrations/**/*.ts'],
-      subscribers: ['src/subscriber/**/*.ts'],
+      logger: 'file',
+      entities: ['dist/src/**/**/**/*.entity.{ts,js}'],
+      migrations: ['dist/src/migrations/**/*.ts'],
+      subscribers: ['dist/src/subscriber/**/*.ts'],
       cli: {
-        entitiesDir: 'src/**/**/entities',
-        migrationsDir: 'src/migrations',
-        subscribersDir: 'src/subscriber',
+        entitiesDir: 'dist/src/**/**/entities',
+        migrationsDir: 'dist/src/migrations',
+        subscribersDir: 'dist/src/subscriber',
       },
     };
   }

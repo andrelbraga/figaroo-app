@@ -1,4 +1,6 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, ManyToMany } from 'typeorm';
+
+import { Employe } from 'src/modules/employe/entities/employe.entity';
 
 @Index('skill_pkey', ['skillId'], { unique: true })
 @Entity('skill', { schema: 'public' })
@@ -13,6 +15,9 @@ export class Skill {
 
   @Column({ type: 'text', name: 'name', nullable: true })
   name: string | null;
+
+  @ManyToMany(() => Employe, (employe: Employe) => employe.skills)
+  employes: Employe[];
 
   @Column({
     type: 'timestamp without time zone',
