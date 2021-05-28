@@ -3,22 +3,24 @@ import * as bcrypt from 'bcrypt';
 import { ConflictException, Injectable } from '@nestjs/common';
 
 import { AuthService } from '../auth/auth.service';
+import { ConfigService } from '@nestjs/config';
 import { CreateEmployeDto } from './dto/create-employe.dto';
 import { EmployeRepository } from './employe.repository';
-import { Skill } from '../common/entities/skill.entity';
+import { Skill } from '../skill/entities/skill.entity';
 import { UpdateEmployeDto } from './dto/update-employe.dto';
 
 @Injectable()
 export class EmployeService {
-  private readonly saltOrRounds = 10;
   constructor(
+    private readonly configService: ConfigService,
     private readonly authService: AuthService,
     private readonly employeRepository: EmployeRepository) {}
 
   async createAndRelations(createEmployeDto: CreateEmployeDto) {
+    console.log(+this.configService.get('SALT_ROUNDS'))
     const hashPassword = await bcrypt.hash(
       createEmployeDto.password,
-      this.saltOrRounds,
+      +this.configService.get('SALT_ROUNDS'),
     );
 
     const listSkill: Skill[] = []

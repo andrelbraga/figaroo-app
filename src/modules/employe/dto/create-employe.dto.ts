@@ -1,11 +1,7 @@
-import {
-  IsNotEmpty,
-  IsString,
-  MaxLength
-} from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
-import { Skill } from 'src/modules/common/entities/skill.entity';
+import { Skill } from 'src/modules/skill/entities/skill.entity';
 
 export class CreateEmployeDto {
   @ApiProperty({ required: true })
@@ -38,17 +34,23 @@ export class CreateEmployeDto {
   @MaxLength(20)
   birthdate: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
-  surName: string | null;
+  surName: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(15)
+  phone: string;
+
+  @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
-  yearsBusiness: string | null;
+  yearsBusiness: string;
 
   @ApiProperty({ required: true })
   @IsString()

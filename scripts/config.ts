@@ -37,7 +37,6 @@ class ConfigService {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       logging: true,
-      logger: 'file',
       entities: ['dist/src/**/**/**/*.entity.{ts,js}'],
       migrations: ['dist/src/migrations/**/*.ts'],
       subscribers: ['dist/src/subscriber/**/*.ts'],
