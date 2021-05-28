@@ -9,6 +9,8 @@ import { ScheduleModule } from './modules/schedule/schedule.module';
 import { SkillModule } from './modules/skill/skill.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configService } from 'scripts/config';
+import { CustomerModule } from './modules/customer/customer.module';
+import { ServiceModule } from './modules/service/service.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
@@ -20,6 +22,8 @@ import { configService } from 'scripts/config';
     ScheduleModule,
     MerchantModule,
     SkillModule,
+    CustomerModule,
+    ServiceModule,
   ],
   controllers: [AppController],
   providers: [AuthService],

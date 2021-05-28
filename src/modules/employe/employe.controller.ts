@@ -12,7 +12,7 @@ import { CreateEmployeDto } from './dto/create-employe.dto';
 import { UpdateEmployeDto } from './dto/update-employe.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('employe')
+@ApiTags('Barbeiro')
 @Controller('employe')
 export class EmployeController {
   constructor(private readonly employeService: EmployeService) {}

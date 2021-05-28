@@ -1,6 +1,8 @@
-import { Column, Entity, Index, ManyToMany } from "typeorm";
+import { Column, Entity, Index, ManyToMany, ManyToOne } from "typeorm";
 
+import { Customer } from "src/modules/customer/entities/customer.entity";
 import { Employe } from "src/modules/employe/entities/employe.entity";
+import { Service } from "src/modules/service/entities/service.entity";
 
 @Index("schedules_pkey1", ["scheduleId"], { unique: true })
 @Entity("schedule", { schema: "public" })
@@ -24,12 +26,6 @@ export class Schedule {
   @Column("date", { name: "scheduling_date", nullable: true })
   schedulingDate: string | null;
   
-  @Column("text", { name: "price", nullable: true })
-  price: string | null;
-  
-  @Column("text", { name: "service", nullable: true })
-  service: string | null;
-  
   @Column("text", { name: "status", nullable: true })
   status: string | null;
   
@@ -42,6 +38,12 @@ export class Schedule {
     })
   createdAt: Date;
 
-  @ManyToMany(() => Employe, (employe: Employe) => employe.skills)
-  employes: Employe[];
+  @ManyToOne(() => Employe, employe => employe.schedule)
+  employe: Employe;
+
+  @ManyToOne(() => Service, service => service.schedule)
+  service: Service;
+
+  @ManyToOne(() => Customer, customer => customer.schedule)
+  customer: Customer;
 }

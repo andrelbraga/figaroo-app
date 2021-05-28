@@ -1,7 +1,7 @@
 import { Column, Entity, Index, JoinTable, ManyToMany } from "typeorm";
 
 import { Employe } from "src/modules/employe/entities/employe.entity";
-import { Service } from "src/modules/common/entities/service.entity";
+import { Service } from "src/modules/service/entities/service.entity";
 
 @Index("merchant_pkey", ["merchantId"], { unique: true })
 @Entity("merchant", { schema: "public" })

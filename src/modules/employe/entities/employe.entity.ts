@@ -4,11 +4,13 @@ import {
   Index,
   JoinTable,
   ManyToMany,
+  OneToMany,
 } from 'typeorm';
 
 import { Exclude } from 'class-transformer';
 import { Merchant } from 'src/modules/merchant/entities/merchant.entity';
 import { Schedule } from 'src/modules/schedule/entities/schedule.entity';
+import { Service } from 'src/modules/service/entities/service.entity';
 import { Skill } from 'src/modules/skill/entities/skill.entity';
 
 /* import { EmployeHasCompetencie } from './employe-has-competencie.entity';
@@ -72,18 +74,23 @@ export class Employe {
 
   @Column({ type: 'text', name: 'age', nullable: true })
   age: string | null;
-
+  
+  @OneToMany(() => Schedule, schedule => schedule.employe)
+  schedule: Schedule[];
+  
   @ManyToMany(() => Skill)
-  @JoinTable({ name: 'employe_has_skill' })
+  @JoinTable({ name: 'employe_has_skills' })
   skills: Skill[];
 
-  @ManyToMany(() => Schedule)
-  @JoinTable({ name: 'employe_has_schedules' })
-  schedules: Schedule[];
+  @ManyToMany(() => Service)
+  @JoinTable({ name: 'employe_has_services' })
+  services: Service[];
 
   @ManyToMany(() => Merchant)
   @JoinTable({ name: 'employe_has_merchants' })
   merchants: Merchant[];
+
+  
   /*
   @OneToMany(
     () => EmployeHasPhone,
