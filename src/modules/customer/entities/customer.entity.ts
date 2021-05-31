@@ -54,9 +54,19 @@ export class Customer {
   updatedAt: Date;
 
   @ManyToMany(() => Merchant)
-  @JoinTable({ name: 'customer_has_merchants' })
+  @JoinTable({ 
+    name: 'customer_has_merchants',
+    joinColumn: {
+      name: 'customer_id',
+      referencedColumnName: 'customerId',
+    },
+    inverseJoinColumn: {
+      name: 'merchant_id',
+      referencedColumnName: 'merchantId',
+    }, 
+  })
   merchants: Merchant[];
   
-  @OneToMany(() => Schedule, schedule => schedule.employe)
+  @OneToMany(() => Schedule, schedule => schedule.customer)
   schedule: Schedule[];
 }

@@ -43,6 +43,16 @@ export class Merchant {
   employes: Employe[];
 
   @ManyToMany(() => Service)
-  @JoinTable({ name: 'merchant_has_services' })
+  @JoinTable({ 
+    name: 'merchant_has_services',
+    joinColumn: {
+      name: 'merchant_id',
+      referencedColumnName: 'merchantId'
+    },
+    inverseJoinColumn:{
+      name: 'service_id',
+      referencedColumnName: 'serviceId'
+    }
+  })
   services: Service[];
 }

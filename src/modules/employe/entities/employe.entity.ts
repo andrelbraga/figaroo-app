@@ -45,7 +45,7 @@ export class Employe {
 
   @Column({ type: 'date', name: 'birthdate' })
   birthdate: string;
-  
+
   @Column({ type: 'text', name: 'phone' })
   phone: string;
 
@@ -74,23 +74,52 @@ export class Employe {
 
   @Column({ type: 'text', name: 'age', nullable: true })
   age: string | null;
-  
-  @OneToMany(() => Schedule, schedule => schedule.employe)
+
+  @OneToMany(() => Schedule, (schedule) => schedule.employe)
   schedule: Schedule[];
-  
+
   @ManyToMany(() => Skill)
-  @JoinTable({ name: 'employe_has_skills' })
+  @JoinTable({
+    name: 'employe_has_skills',
+    joinColumn: {
+      name: 'employe_id',
+      referencedColumnName: 'employeId',
+    },
+    inverseJoinColumn: {
+      name: 'skill_id',
+      referencedColumnName: 'skillId',
+    },
+  })
   skills: Skill[];
 
   @ManyToMany(() => Service)
-  @JoinTable({ name: 'employe_has_services' })
+  @JoinTable({
+    name: 'employe_has_services',
+    joinColumn: {
+      name: 'employe_id',
+      referencedColumnName: 'employeId',
+    },
+    inverseJoinColumn: {
+      name: 'service_id',
+      referencedColumnName: 'serviceId',
+    },
+  })
   services: Service[];
 
   @ManyToMany(() => Merchant)
-  @JoinTable({ name: 'employe_has_merchants' })
+  @JoinTable({
+    name: 'employe_has_merchants',
+    joinColumn: {
+      name: 'employe_id',
+      referencedColumnName: 'employeId',
+    },
+    inverseJoinColumn: {
+      name: 'merchant_id',
+      referencedColumnName: 'merchantId',
+    },
+  })
   merchants: Merchant[];
 
-  
   /*
   @OneToMany(
     () => EmployeHasPhone,

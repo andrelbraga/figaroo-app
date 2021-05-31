@@ -16,19 +16,19 @@ export class Skill {
   @Column({ type: 'text', name: 'name', nullable: true })
   name: string | null;
 
-  @ManyToMany(() => Employe, (employe: Employe) => employe.skills)
-  employes: Employe[];
-
   @Column({
     type: 'timestamp without time zone',
     name: 'created_at',
     default: () => 'CURRENT_TIMESTAMP(0)',
   })
   createdAt: Date;
-
+  
   @Column({
     type: 'timestamp without time zone',
     name: 'updated_at',
   })
   updatedAt: Date;
+  
+  @ManyToMany(() => Employe, (employe: Employe) => employe.skills)
+  employes: Employe[];
 }
