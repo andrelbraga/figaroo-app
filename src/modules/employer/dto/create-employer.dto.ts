@@ -1,10 +1,9 @@
 import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
-import { Merchant } from 'src/modules/merchant/entities/merchant.entity';
-import { Skill } from 'src/modules/skill/entities/skill.entity';
+import { CreateMerchantDto } from 'src/modules/merchant/dto/create-merchant.dto';
 
-export class CreateEmployeDto {
+export class CreateEmployerDto {
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
@@ -15,19 +14,7 @@ export class CreateEmployeDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
-  lastName: string;
-
-  @ApiProperty({ required: true })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(20)
-  email: string;
-
-  @ApiProperty({ required: true })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(20)
-  document: string;
+  lastName: string | null;
 
   @ApiProperty({ required: true })
   @IsString()
@@ -39,24 +26,24 @@ export class CreateEmployeDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
-  surName: string;
-
-  @ApiProperty({ required: true })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(15)
-  phone: string;
+  document: string;
 
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
-  yearsBusiness: string;
+  email: string;
 
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
   password: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(20)
+  avatarPath: string | null;
 
   @ApiProperty({ required: false, default: () => Date.now() })
   @IsString()
@@ -64,9 +51,6 @@ export class CreateEmployeDto {
   @MaxLength(30)
   updatedAt: Date;
 
-  @ApiProperty({ required: false })
-  skills: Skill[];
-
-  @ApiProperty({ required: false })
-  merchants: Merchant[];
+  @ApiProperty({ required: true })
+  merchant: CreateMerchantDto[];
 }

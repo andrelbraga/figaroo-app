@@ -14,7 +14,7 @@ export class CreateServiceDto {
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
-  @MaxLength(20)
+  @MaxLength(50)
   description: string;
 
   @ApiProperty({ required: true })

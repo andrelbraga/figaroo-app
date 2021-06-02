@@ -8,8 +8,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class ServiceService {
   constructor(
-    @InjectRepository(Service)
-    private serviceRepository: Repository<Service>,
+    @InjectRepository(Service) private serviceRepository: Repository<Service>,
   ) {}
   async create(createServiceDto: CreateServiceDto) {
     const service = this.serviceRepository.create(createServiceDto);

@@ -1,5 +1,6 @@
-import { Controller, Post, Body, Param } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Post, Body, Param, UseGuards, Req, Get } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { AuthService } from './auth.service';
 import { LoginAuthDto } from './dto/login-employe.dto';
 
@@ -7,6 +8,12 @@ import { LoginAuthDto } from './dto/login-employe.dto';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @ApiBearerAuth()
+  @Get('auth/login')
+  async loginn(@Param() loginAuthDto: LoginAuthDto) {
+    return loginAuthDto;
+  }
 
   @Post(':entity')
   login(@Param('entity') entity: string, @Body() loginAuthDto: LoginAuthDto) {
