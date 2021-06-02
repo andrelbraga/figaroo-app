@@ -1,51 +1,65 @@
-import * as bcrypt from 'bcrypt';
+import {
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 
-import { ConflictException, Injectable } from '@nestjs/common';
-
+import { AlreadyExisting } from 'src/helpers/exceptions/already-existing.exception';
 import { AuthService } from '../auth/auth.service';
-import { ConfigService } from '@nestjs/config';
 import { CreateEmployeDto } from './dto/create-employe.dto';
 import { EmployeRepository } from './employe.repository';
+import { Merchant } from '../merchant/entities/merchant.entity';
 import { Skill } from '../skill/entities/skill.entity';
 import { UpdateEmployeDto } from './dto/update-employe.dto';
 
 @Injectable()
 export class EmployeService {
   constructor(
-    private readonly configService: ConfigService,
     private readonly authService: AuthService,
-    private readonly employeRepository: EmployeRepository) {}
+    private readonly employeRepository: EmployeRepository,
+  ) {}
 
   async createAndRelations(createEmployeDto: CreateEmployeDto) {
-    console.log(+this.configService.get('SALT_ROUNDS'))
-    const hashPassword = await bcrypt.hash(
-      createEmployeDto.password,
-      +this.configService.get('SALT_ROUNDS'),
-    );
+    const { document } = createEmployeDto;
+    const employe = await this.employeRepository.findOne({ document });
+    if (employe) {
+      throw new AlreadyExisting();
+    }
 
-    const listSkill: Skill[] = []
-    createEmployeDto.skills.forEach((item: any) => {
-      const newSkill = new Skill()
-      newSkill.skillId = item
-      listSkill.push(newSkill)
-    })
-    createEmployeDto.skills = listSkill
-    
-    const employeDTO = await this.employeRepository.create({
-      ...createEmployeDto,
-      password: hashPassword,
-    });
-    
+    if (createEmployeDto.skills) {
+      const listSkill: Skill[] = [];
+      createEmployeDto.skills.forEach((item: any) => {
+        const newSkill = new Skill();
+        newSkill.skillId = item;
+        listSkill.push(newSkill);
+      });
+      createEmployeDto.skills = listSkill;
+    }
+
+    if (createEmployeDto.merchants) {
+      const listMerchants: Merchant[] = [];
+      createEmployeDto.merchants.forEach((item: any) => {
+        const newMerchants = new Merchant();
+        newMerchants.merchantId = item;
+        listMerchants.push(newMerchants);
+      });
+      createEmployeDto.merchants = listMerchants;
+    }
+
+    const employeDTO = await this.employeRepository.create(createEmployeDto);
+
     await this.employeRepository.save(employeDTO);
 
     if (employeDTO) {
-      return await this.authService.login(employeDTO.document, employeDTO.employeId);
+      return await this.authService.login(
+        employeDTO.document,
+        employeDTO.employeId,
+      );
     }
     throw new ConflictException();
   }
 
   async create(createEmployeDto: CreateEmployeDto) {
-    const employe = this.employeRepository.create(createEmployeDto) 
+    const employe = this.employeRepository.create(createEmployeDto);
     return await this.employeRepository.save(employe);
   }
 
@@ -54,7 +68,10 @@ export class EmployeService {
   }
 
   async findOneAndRelations(id: string) {
-    return await this.employeRepository.findOne({ employeId: id }, { relations: ['skills'] });
+    return await this.employeRepository.findOne(
+      { employeId: id },
+      { relations: ['skills'] },
+    );
   }
 
   async findOneScheduleByScheduleId() {
@@ -66,7 +83,7 @@ export class EmployeService {
   }
 
   async update(id: string, updateEmployeDto: UpdateEmployeDto) {
-    const employe = this.employeRepository.create(updateEmployeDto) 
+    const employe = this.employeRepository.create(updateEmployeDto);
     return await this.employeRepository.update(id, updateEmployeDto);
   }
 

@@ -1,22 +1,33 @@
-import { IsHash, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength } from "class-validator";
 
-import { ApiProperty } from '@nestjs/swagger';
-import { Merchant } from 'src/modules/merchant/entities/merchant.entity';
-import { Skill } from 'src/modules/skill/entities/skill.entity';
+import { ApiProperty } from "@nestjs/swagger";
+import { Merchant } from "src/modules/merchant/entities/merchant.entity";
 
-export class CreateEmployeDto {
+export class CreateEmployerDto {
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
   name: string;
-
+  
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
-  lastName: string;
-
+  lastName: string | null;
+  
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(20)
+  birthdate: string;
+  
+  @ApiProperty({ required: true })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(20)
+  document: string;
+  
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
@@ -27,46 +38,20 @@ export class CreateEmployeDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
-  document: string;
-
-  @ApiProperty({ required: true })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(20)
-  birthdate: string;
-
-  @ApiProperty({ required: true })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(20)
-  surName: string;
-
-  @ApiProperty({ required: true })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(15)
-  phone: string;
-
-  @ApiProperty({ required: true })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(20)
-  yearsBusiness: string;
-
-  @ApiProperty({ required: true })
-  @IsString()
-  @IsNotEmpty()
   password: string;
 
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(20)
+  avatarPath: string | null;
+  
   @ApiProperty({ required: false, default: () => Date.now() })
   @IsString()
   @IsNotEmpty()
   @MaxLength(30)
   updatedAt: Date;
-
-  @ApiProperty({ required: false })
-  skills: Skill[];
-
-  @ApiProperty({ required: false })
+  
+  @ApiProperty({ required: true })
   merchants: Merchant[];
 }
