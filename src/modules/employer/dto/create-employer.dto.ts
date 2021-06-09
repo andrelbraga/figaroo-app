@@ -9,25 +9,21 @@ export class CreateEmployerDto {
   @IsNotEmpty()
   @MaxLength(20)
   name: string;
-
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
   lastName: string | null;
-
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
   birthdate: string;
-
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
   document: string;
-
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
@@ -44,7 +40,6 @@ export class CreateEmployerDto {
   @IsNotEmpty()
   @MaxLength(20)
   avatarPath: string | null;
-
   @ApiProperty({ required: false, default: () => Date.now() })
   @IsString()
   @IsNotEmpty()
