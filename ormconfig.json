@@ -2,7 +2,7 @@
   "type": "postgres",
   "host": "localhost",
   "port": 5432,
-  "username": "postgres",
+  "username": "figaroo",
   "password": "dbmaster",
   "database": "figaroo-dev",
   "logging": true,
