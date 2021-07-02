@@ -8,7 +8,6 @@ export class CreateEmployeDto {
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
-  @MaxLength(20)
   name: string;
 
   @ApiProperty({ required: true })
