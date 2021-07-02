@@ -3,8 +3,8 @@
   "host": "localhost",
   "port": 5432,
   "username": "postgres",
-  "password": "dbmaster",
-  "database": "figaroo-dev",
+  "password": "postgres",
+  "database": "db-figaroo",
   "logging": true,
   "entities": [
     "src/**/**/**/*.entity.{ts,js}"
