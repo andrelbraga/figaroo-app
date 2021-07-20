@@ -1,7 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 
 import { AlreadyExisting } from 'src/helpers/exceptions/already-existing.exception';
 import { AuthService } from '../auth/auth.service';
@@ -57,6 +54,7 @@ export class EmployeService {
   }
 
   async create(createEmployeDto: CreateEmployeDto) {
+    createEmployeDto.updatedAt = new Date();
     const employe = this.employeRepository.create(createEmployeDto);
     return await this.employeRepository.save(employe);
   }

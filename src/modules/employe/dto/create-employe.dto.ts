@@ -20,7 +20,7 @@ export class CreateEmployeDto {
   @ApiProperty({ required: true })
   @IsString()
   @IsNotEmpty()
-  @MaxLength(20)
+  @MaxLength(50)
   email: string;
 
   @ApiProperty({ required: true })
@@ -59,9 +59,6 @@ export class CreateEmployeDto {
   password: string;
 
   @ApiProperty({ required: false, default: () => Date.now() })
-  @IsString()
-  @IsNotEmpty()
-  @MaxLength(30)
   updatedAt: Date;
 
   @ApiProperty({ required: false })
