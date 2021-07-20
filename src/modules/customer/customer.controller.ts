@@ -20,7 +20,7 @@ export class CustomerController {
   @Post()
   create(@Body() createCustomerDto: CreateCustomerDto) {
     console.log('Constroller', createCustomerDto);
-    return this.customerService.create(createCustomerDto);
+    return this.customerService.createAndRelations(createCustomerDto);
   }
 
   @Get()
@@ -28,9 +28,9 @@ export class CustomerController {
     return this.customerService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.customerService.findOne(+id);
+  @Get(':document')
+  findOne(@Param('document') document: string) {
+    return this.customerService.findOne(document);
   }
 
   @Patch(':id')

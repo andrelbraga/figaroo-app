@@ -1,5 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 
+import { Employe } from 'src/modules/employe/entities/employe.entity';
 import { Exclude } from 'class-transformer';
 import { Merchant } from 'src/modules/merchant/entities/merchant.entity';
 import { Schedule } from 'src/modules/schedule/entities/schedule.entity';
@@ -66,6 +67,20 @@ export class Customer {
     }, 
   })
   merchants: Merchant[];
+
+  @ManyToMany(() => Employe)
+  @JoinTable({ 
+    name: 'customer_has_employe',
+    joinColumn: {
+      name: 'customer_id',
+      referencedColumnName: 'customerId',
+    },
+    inverseJoinColumn: {
+      name: 'employe_id',
+      referencedColumnName: 'employeId',
+    }, 
+  })
+  employes: Employe[];
   
   @OneToMany(() => Schedule, schedule => schedule.customer)
   schedule: Schedule[];
