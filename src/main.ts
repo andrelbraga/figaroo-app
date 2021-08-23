@@ -8,6 +8,7 @@ import { configService } from 'scripts/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: true,
+    cors: true,
   });
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix(process.env.API_VERSION);
@@ -28,9 +29,9 @@ async function bootstrap() {
       app,
       document,
       {
-        swaggerOptions:{
-          docExpansion: 'none'
-        }
+        swaggerOptions: {
+          docExpansion: 'none',
+        },
       },
     );
   }
