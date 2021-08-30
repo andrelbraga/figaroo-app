@@ -8,8 +8,11 @@ import { ConfigService } from '@nestjs/config';
 export class HashMiddleware implements NestMiddleware {
   constructor(private readonly configService: ConfigService) {}
   async use(req: any, res: any, next: () => void) {
-    const { body: { password } } = req
-    if(password){
+    const {
+      body: { password },
+    } = req;
+    if (password) {
+      console.log(password);
       const hashPassword = await bcrypt.hash(
         password,
         +this.configService.get('SALT_ROUNDS'),

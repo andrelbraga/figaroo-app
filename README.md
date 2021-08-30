@@ -106,3 +106,6 @@ Nest is [MIT licensed](LICENSE).
 
 extensão PGSQL
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+docker run -P --network host figaroo-dev
+chmod +x run-config.sh

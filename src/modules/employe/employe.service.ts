@@ -54,7 +54,7 @@ export class EmployeService {
   }
 
   async create(createEmployeDto: CreateEmployeDto) {
-    createEmployeDto.updatedAt = new Date();
+    createEmployeDto.updatedAt = new Date(Date.now());
     const employe = this.employeRepository.create(createEmployeDto);
     return await this.employeRepository.save(employe);
   }

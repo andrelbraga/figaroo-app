@@ -1,7 +1,15 @@
-import { Column, Entity, Index, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 
 import { Exclude } from 'class-transformer';
 import { Merchant } from 'src/modules/merchant/entities/merchant.entity';
+import { User } from 'src/modules/common/entities/user.entity';
 
 @Index('employer_pkey', ['employerId'], { unique: true })
 @Entity('employer', { schema: 'public' })
@@ -46,4 +54,8 @@ export class Employer {
 
   @OneToMany(() => Merchant, (merchant) => merchant.employer)
   merchants: Merchant[];
+
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

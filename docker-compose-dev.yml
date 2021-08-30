@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  app:
+    env_file: .env
+    build: .
+    image: node:14-alpine
+    command: npm run start:dev
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+
+  postgres:
+    image: postgres:11.2-alpine
+  environment: 
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+  ports: 
+    - 5432:5432
+  volumes: 
+    - figaroo-db:/var/lib/postgres/data
+  
+  figaroo-db:
+    build:
+      context: .
+    environment:
+      DB_SCHEMA: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: postgres
+    depends_on: 
+      - postgres
+    ports: 
+      - 3000:3000
+

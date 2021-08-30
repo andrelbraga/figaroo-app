@@ -1,10 +1,10 @@
 {
   "type": "postgres",
-  "host": "localhost",
+  "host": "pgsql",
   "port": 5432,
   "username": "postgres",
-  "password": "postgres",
-  "database": "db-figaroo",
+  "password": "dbmaster",
+  "database": "postgres",
   "logging": true,
   "entities": [
     "src/**/**/**/*.entity.{ts,js}"

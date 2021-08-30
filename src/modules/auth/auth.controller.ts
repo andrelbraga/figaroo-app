@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Param, UseGuards, Req, Get } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Param,
+  UseGuards,
+  Req,
+  Get,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { AuthService } from './auth.service';
@@ -18,5 +26,13 @@ export class AuthController {
   @Post(':entity')
   login(@Param('entity') entity: string, @Body() loginAuthDto: LoginAuthDto) {
     return this.authService.auth(loginAuthDto, entity);
+  }
+
+  @Get(':entity/:email')
+  doesEmailExists(
+    @Param('entity') entity: string,
+    @Param('email') email: string,
+  ) {
+    return this.authService.doesEmailExists(entity, email);
   }
 }

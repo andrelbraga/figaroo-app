@@ -1,8 +1,10 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from 'typeorm';
 
+import { Employe } from 'src/modules/employe/entities/employe.entity';
 import { Exclude } from 'class-transformer';
 import { Merchant } from 'src/modules/merchant/entities/merchant.entity';
 import { Schedule } from 'src/modules/schedule/entities/schedule.entity';
+import { User } from 'src/modules/common/entities/user.entity';
 
 @Entity('customer', { schema: 'public' })
 export class Customer {
@@ -66,7 +68,25 @@ export class Customer {
     }, 
   })
   merchants: Merchant[];
+
+  @ManyToMany(() => Employe)
+  @JoinTable({ 
+    name: 'customer_has_employe',
+    joinColumn: {
+      name: 'customer_id',
+      referencedColumnName: 'customerId',
+    },
+    inverseJoinColumn: {
+      name: 'employe_id',
+      referencedColumnName: 'employeId',
+    }, 
+  })
+  employes: Employe[];
   
   @OneToMany(() => Schedule, schedule => schedule.customer)
   schedule: Schedule[];
+
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }
