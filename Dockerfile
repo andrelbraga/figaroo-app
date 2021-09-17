@@ -1,4 +1,4 @@
-FROM node:14-alpine AS figaroo-api
+FROM node:14-alpine
 
 # diretorio alvo
 WORKDIR /usr/src/app

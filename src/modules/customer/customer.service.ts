@@ -5,43 +5,54 @@ import { Customer } from './entities/customer.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AlreadyExisting } from 'src/helpers/exceptions/already-existing.exception';
-import { AuthService } from '../auth/auth.service';
 import { Merchant } from '../merchant/entities/merchant.entity';
+import { UserService } from '../user/user.service';
+import { User } from '../user/entities/user.entity';
+import { UserTypeEnum } from '../user/enums/user.enum';
 
 @Injectable()
 export class CustomerService {
   constructor(
     @InjectRepository(Customer)
     private customerRepository: Repository<Customer>,
-    private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {}
 
   async createAndRelations(createCustomerDto: CreateCustomerDto) {
-    const { document } = createCustomerDto;
-    const customer = await this.customerRepository.findOne({ document });
+    const { document, phone, password, email } = createCustomerDto;
+    let customer = await this.customerRepository.findOne({
+      where: [{ phone }, { email }],
+    });
+
     if (customer) {
       throw new AlreadyExisting();
     }
 
     if (createCustomerDto.merchants) {
       const listMerchants: Merchant[] = [];
-      createCustomerDto.merchants.forEach((item: any) => {
+      createCustomerDto.merchants.forEach((id: any) => {
         const newMerchants = new Merchant();
-        newMerchants.merchantId = item;
+        newMerchants.merchantId = id;
         listMerchants.push(newMerchants);
       });
       createCustomerDto.merchants = listMerchants;
     }
 
-    const customerDTO = await this.create(createCustomerDto);
+    createCustomerDto.user = await this.createUser(createCustomerDto);
 
-    if (customerDTO) {
-      return await this.authService.login(
-        customerDTO.document,
-        customerDTO.customerId,
-      );
-    }
-    throw new ConflictException();
+    return await this.create(createCustomerDto);
+  }
+
+  async createUser(createCustomerDto: CreateCustomerDto) {
+    const { phone, password, email, document } = createCustomerDto;
+    const userDTO: User = await this.userService.create({
+      phone,
+      password,
+      email,
+      document,
+      type: UserTypeEnum.CUSTOMER,
+    } as User);
+    return userDTO;
   }
 
   async create(createCustomerDto: CreateCustomerDto) {

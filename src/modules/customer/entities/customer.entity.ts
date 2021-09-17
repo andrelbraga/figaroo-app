@@ -1,10 +1,21 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 
 import { Employe } from 'src/modules/employe/entities/employe.entity';
 import { Exclude } from 'class-transformer';
 import { Merchant } from 'src/modules/merchant/entities/merchant.entity';
 import { Schedule } from 'src/modules/schedule/entities/schedule.entity';
-import { User } from 'src/modules/common/entities/user.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 
 @Entity('customer', { schema: 'public' })
 export class Customer {
@@ -24,13 +35,9 @@ export class Customer {
   @Column('text', { name: 'email' })
   email: string;
 
-  @Exclude()
-  @Column({ type: 'text', name: 'password' })
-  password: string;
-
   @Column('text', { name: 'phone' })
   phone: string;
-  
+
   @Column('text', { name: 'document', nullable: true })
   document: string | null;
 
@@ -56,7 +63,7 @@ export class Customer {
   updatedAt: Date;
 
   @ManyToMany(() => Merchant)
-  @JoinTable({ 
+  @JoinTable({
     name: 'customer_has_merchants',
     joinColumn: {
       name: 'customer_id',
@@ -65,12 +72,12 @@ export class Customer {
     inverseJoinColumn: {
       name: 'merchant_id',
       referencedColumnName: 'merchantId',
-    }, 
+    },
   })
   merchants: Merchant[];
 
   @ManyToMany(() => Employe)
-  @JoinTable({ 
+  @JoinTable({
     name: 'customer_has_employe',
     joinColumn: {
       name: 'customer_id',
@@ -79,11 +86,11 @@ export class Customer {
     inverseJoinColumn: {
       name: 'employe_id',
       referencedColumnName: 'employeId',
-    }, 
+    },
   })
   employes: Employe[];
-  
-  @OneToMany(() => Schedule, schedule => schedule.customer)
+
+  @OneToMany(() => Schedule, (schedule) => schedule.customer)
   schedule: Schedule[];
 
   @OneToOne(() => User)

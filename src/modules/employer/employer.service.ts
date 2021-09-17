@@ -6,14 +6,11 @@ import { DeepPartial, Repository } from 'typeorm';
 import { Employer } from './entities/employer.entity';
 import { AlreadyExisting } from 'src/helpers/exceptions/already-existing.exception';
 
-import { AuthService } from '../auth/auth.service';
-
 @Injectable()
 export class EmployerService {
   constructor(
     @InjectRepository(Employer)
     private employerRepository: Repository<Employer>,
-    private readonly authService: AuthService,
   ) {}
   async createAndRelations(createEmployerDto: CreateEmployerDto) {
     const { document } = createEmployerDto;
@@ -22,17 +19,9 @@ export class EmployerService {
       throw new AlreadyExisting();
     }
 
-    const employerDTO = await this.create({
+    return await this.create({
       ...createEmployerDto,
     });
-
-    if (employerDTO) {
-      return await this.authService.login(
-        employerDTO.document,
-        employerDTO.employerId,
-      );
-    }
-    throw new ConflictException();
   }
 
   async create(createEmployerDto: CreateEmployerDto) {

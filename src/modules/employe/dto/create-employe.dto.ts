@@ -1,8 +1,10 @@
 import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import { Merchant } from 'src/modules/merchant/entities/merchant.entity';
 import { Skill } from 'src/modules/skill/entities/skill.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 
 export class CreateEmployeDto {
   @ApiProperty({ required: true })
@@ -57,8 +59,11 @@ export class CreateEmployeDto {
   @IsNotEmpty()
   password: string;
 
-  @ApiProperty({ required: false, default: () => Date.now() })
+  @Exclude()
   updatedAt: Date;
+
+  @Exclude()
+  user: User;
 
   @ApiProperty({ required: false })
   skills: Skill[];

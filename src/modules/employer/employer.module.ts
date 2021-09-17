@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 
 import { Address } from '../common/entities/address.entity';
-import { AuthModule } from '../auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { Employer } from './entities/employer.entity';
 import { EmployerController } from './employer.controller';
@@ -21,7 +20,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ConfigModule.forRoot({
       expandVariables: true,
     }),
-    AuthModule,
   ],
   controllers: [EmployerController],
   providers: [EmployerService],

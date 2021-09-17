@@ -1,4 +1,4 @@
-version: "3.3"
+version: '3.3'
 
 services:
   pgsql:
@@ -14,25 +14,27 @@ services:
       - /init-db.sh:/docker-entrypoint-initdb.d/
     ports:
       - 5432:5432
-    networks: 
+    networks:
       - figaroo-network
-    
+
   pgadmin:
     container_name: pgadmin4-container
     image: dpage/pgadmin4
-    environment: 
-      PGADMIN_DEFAULT_EMAIL: "dnk_vip@hotmail.com"
-      PGADMIN_DEFAULT_PASSWORD: "omega3ab"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'dnk_vip@hotmail.com'
+      PGADMIN_DEFAULT_PASSWORD: 'omega3ab'
     ports:
       - 8080:80
-    depends_on: 
+    depends_on:
       - pgsql
-    networks: 
+    networks:
       - figaroo-network
-    
+
   app-dev:
     container_name: figaroo-dev-container
     image: docker.io/andrelbraga/figaroo-dev
+    environment:
+      NODE_ENV: development
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -47,6 +49,6 @@ services:
     depends_on:
       - pgsql
 
-networks: 
+networks:
   figaroo-network:
     driver: bridge

@@ -14,7 +14,7 @@ import { Merchant } from 'src/modules/merchant/entities/merchant.entity';
 import { Schedule } from 'src/modules/schedule/entities/schedule.entity';
 import { Service } from 'src/modules/service/entities/service.entity';
 import { Skill } from 'src/modules/skill/entities/skill.entity';
-import { User } from 'src/modules/common/entities/user.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 
 /* import { EmployeHasCompetencie } from './employe-has-competencie.entity';
 import { EmployeHasPhone } from './employe-has-phone.entity';
@@ -57,10 +57,6 @@ export class Employe {
 
   @Column({ type: 'text', name: 'years_business' })
   yearsBusiness: string | null;
-
-  @Exclude()
-  @Column({ type: 'text', name: 'password' })
-  password: string;
 
   @Column({
     type: 'timestamp without time zone',

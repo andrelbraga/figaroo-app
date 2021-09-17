@@ -1,7 +1,9 @@
 import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import { Merchant } from 'src/modules/merchant/entities/merchant.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 
 export class CreateCustomerDto {
   @ApiProperty({ required: true })
@@ -28,13 +30,13 @@ export class CreateCustomerDto {
   @MaxLength(20)
   document: string;
 
-/*   @ApiProperty({ required: false })
+  /*   @ApiProperty({ required: false })
   @IsString()
   @IsNotEmpty()
   @MaxLength(20)
   surName: string; */
 
-/*   @ApiProperty({ required: false })
+  /*   @ApiProperty({ required: false })
   @IsString()
   @MaxLength(20)
   nationality: string;
@@ -51,8 +53,11 @@ export class CreateCustomerDto {
   @IsNotEmpty()
   password: string;
 
-  @ApiProperty({ required: false, default: () => Date.now() })
+  @Exclude()
   updatedAt: Date;
+
+  @Exclude()
+  user: User;
 
   @ApiProperty({ required: false })
   merchants: Merchant[];

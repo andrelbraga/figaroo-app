@@ -15,8 +15,13 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .addBearerAuth(
-      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
-      'Authorization',
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        in: 'header',
+      },
+      'access-token',
     )
     .setTitle('Figaroo service')
     .setDescription('Figaroo service for implementation')

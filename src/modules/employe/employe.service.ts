@@ -1,23 +1,31 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import { AlreadyExisting } from 'src/helpers/exceptions/already-existing.exception';
-import { AuthService } from '../auth/auth.service';
 import { CreateEmployeDto } from './dto/create-employe.dto';
-import { EmployeRepository } from './employe.repository';
 import { Merchant } from '../merchant/entities/merchant.entity';
 import { Skill } from '../skill/entities/skill.entity';
 import { UpdateEmployeDto } from './dto/update-employe.dto';
+import { User } from '../user/entities/user.entity';
+import { UserService } from '../user/user.service';
+import { Repository } from 'typeorm';
+import { Employe } from './entities/employe.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserTypeEnum } from '../user/enums/user.enum';
 
 @Injectable()
 export class EmployeService {
   constructor(
-    private readonly authService: AuthService,
-    private readonly employeRepository: EmployeRepository,
+    @InjectRepository(Employe)
+    private employeRepository: Repository<Employe>,
+    private readonly userService: UserService,
   ) {}
 
   async createAndRelations(createEmployeDto: CreateEmployeDto) {
-    const { document } = createEmployeDto;
-    const employe = await this.employeRepository.findOne({ document });
+    const { document, phone, password, email } = createEmployeDto;
+
+    const employe = await this.employeRepository.findOne({
+      where: [{ phone }, { email }],
+    });
     if (employe) {
       throw new AlreadyExisting();
     }
@@ -42,15 +50,21 @@ export class EmployeService {
       createEmployeDto.merchants = listMerchants;
     }
 
-    const employeDTO = await this.create(createEmployeDto);
+    createEmployeDto.user = await this.createUser(createEmployeDto);
 
-    if (employeDTO) {
-      return await this.authService.login(
-        employeDTO.document,
-        employeDTO.employeId,
-      );
-    }
-    throw new ConflictException();
+    return await this.create(createEmployeDto);
+  }
+
+  async createUser(createEmployeDto: CreateEmployeDto) {
+    const { phone, password, email, document } = createEmployeDto;
+    const userDTO: User = await this.userService.create({
+      phone,
+      password,
+      email,
+      document,
+      type: UserTypeEnum.EMPLOYE,
+    } as User);
+    return userDTO;
   }
 
   async create(createEmployeDto: CreateEmployeDto) {

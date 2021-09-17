@@ -9,7 +9,7 @@ import {
 
 import { Exclude } from 'class-transformer';
 import { Merchant } from 'src/modules/merchant/entities/merchant.entity';
-import { User } from 'src/modules/common/entities/user.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 
 @Index('employer_pkey', ['employerId'], { unique: true })
 @Entity('employer', { schema: 'public' })
@@ -35,10 +35,6 @@ export class Employer {
 
   @Column('text', { name: 'last_name', nullable: true })
   lastName: string | null;
-
-  @Exclude()
-  @Column('text', { name: 'password' })
-  password: string;
 
   @Column('text', { name: 'avatar_path', nullable: true })
   avatarPath: string | null;
