@@ -48,6 +48,18 @@ services:
     restart: unless-stopped
     depends_on:
       - pgsql
+  
+  app-web:
+    container_name: figaroo-pwa-container
+    image: docker.io/andrelbraga/figaroo-pwa
+    ports:
+      - 80:80
+    networks:
+      - figaroo-network
+    restart: unless-stopped
+    depends_on:
+      - app-dev
+      - pgsql
 
 networks:
   figaroo-network:

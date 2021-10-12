@@ -22,11 +22,6 @@ export class EmployeController {
     return this.employeService.createAndRelations(createEmployeDto);
   }
 
-  @Get()
-  findAll() {
-    return this.employeService.findAllAndRelations();
-  }
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.employeService.findOneAndRelations(id);
